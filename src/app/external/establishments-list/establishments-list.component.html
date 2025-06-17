@@ -1,0 +1,112 @@
+<div class="card">
+    <!-- Header con título y búsqueda -->
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-2xl font-semibold text-gray-800 m-0">Listado de Establecimientos del SRI</h2>
+        <p-iconfield iconPosition="left" class="w-80">
+            <p-inputicon>
+                <i class="pi pi-search"></i>
+            </p-inputicon>
+            <input 
+                pInputText 
+                type="text" 
+                (input)="customFilter($event, dt2)" 
+                placeholder="Buscar por nombre, ubicación, actividad..." 
+                class="w-full" />
+        </p-iconfield>
+    </div>
+
+    <!-- Tabla con RowSpan Grouping -->
+    <p-table 
+        #dt2
+        [value]="customers" 
+        rowGroupMode="rowspan" 
+        groupRowsBy="nombreComercial.name" 
+        sortField="nombreComercial.name" 
+        sortMode="single"
+        [paginator]="true" 
+        [rows]="5"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+        [rowsPerPageOptions]="[5, 10, 25, 50]"
+        [tableStyle]="{ 'min-width': '75rem' }"
+        styleClass="p-datatable-gridlines">
+        
+        <ng-template #header>
+            <tr>
+                <th style="width:3rem">Nro.</th>
+                <th>Nombre Comercial</th>
+                <th>Ubicación de Establecimiento</th>
+                <th>Actividad</th>
+                <th>Número de Registro</th>
+                <th>Estado Catastro</th>
+                <th style="width:12rem">Opciones</th>
+            </tr>
+        </ng-template>
+        
+        <ng-template #body let-customer let-rowIndex="rowIndex" let-rowgroup="rowgroup" let-rowspan="rowspan">
+            <tr>
+                <td>{{ customer.id }}</td>
+                <td *ngIf="rowgroup" [attr.rowspan]="rowspan">
+                    <div class="flex items-center gap-2">
+                        <span class="font-semibold">{{ customer.nombreComercial.name }}</span>
+                        <span class="text-sm text-gray-500">({{ calculateCommercialNameTotal(customer.nombreComercial.name) }} establecimientos)</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="flex items-center gap-2">
+                        <i class="pi pi-map-marker text-gray-500"></i>
+                        <span class="text-sm">{{ customer.ubicacionEstablecimiento.name }}</span>
+                    </div>
+                </td>
+                <td>
+                    <span class="text-sm">{{ customer.actividad.name }}</span>
+                </td>
+                <td>
+                    <span class="font-mono text-sm">{{ customer.numerosRegistro }}</span>
+                </td>
+                <td>
+                    <p-tag [value]="customer.estadoCatastro" [severity]="getSeverity(customer.estadoCatastro)" />
+                </td>
+                <td>
+                    <div class="flex gap-2">
+                        <button 
+                            pButton 
+                            pRipple 
+                            icon="pi pi-plus" 
+                            class="p-button-rounded p-button-success p-button-sm" 
+                            title="Crear Trámite"
+                            (click)="onAdd(customer)">
+                        </button>
+                        <button 
+                            pButton 
+                            pRipple 
+                            icon="pi pi-calendar" 
+                            class="p-button-rounded p-button-info p-button-sm" 
+                            title="Solicitar Primera Inscripción"
+                            (click)="onCalendar(customer)">
+                        </button>
+                        <button 
+                            pButton 
+                            pRipple 
+                            icon="pi pi-download" 
+                            class="p-button-rounded p-button-secondary p-button-sm" 
+                            title="Descargar Certificado"
+                            (click)="onDownload(customer)">
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+        
+        <ng-template #emptymessage>
+            <tr>
+                <td colspan="7" class="text-center p-4">
+                    <div class="flex flex-column align-items-center gap-2">
+                        <i class="pi pi-search text-4xl text-gray-400"></i>
+                        <span class="text-gray-500">No se encontraron registros</span>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

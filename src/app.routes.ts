@@ -5,6 +5,7 @@ import { Documentation } from './app/pages/documentation/documentation';
 import { Landing } from './app/pages/landing/landing';
 import { Notfound } from './app/pages/notfound/notfound';
 
+
 export const appRoutes: Routes = [
     {
         path: '',
@@ -19,5 +20,9 @@ export const appRoutes: Routes = [
     { path: 'landing', component: Landing },
     { path: 'notfound', component: Notfound },
     { path: 'auth', loadChildren: () => import('./app/pages/auth/auth.routes') },
+    {
+        path: 'external',
+        loadChildren: () => import('./app/external/external.routes').then(m => m.externalRoutes)
+    },
     { path: '**', redirectTo: '/notfound' }
 ];
