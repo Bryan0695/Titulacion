@@ -20,9 +20,9 @@ export const appRoutes: Routes = [
     { path: 'landing', component: Landing },
     { path: 'notfound', component: Notfound },
     { path: 'auth', loadChildren: () => import('./app/pages/auth/auth.routes') },
-    {
-        path: 'external',
-        loadChildren: () => import('./app/external/external.routes').then(m => m.externalRoutes)
-    },
+  {
+    path: 'establishments',
+    loadComponent: () => import('./app/features/establishments/components/establishment-list/establishment-list.component').then(m => m.EstablishmentListComponent)
+  },
     { path: '**', redirectTo: '/notfound' }
 ];

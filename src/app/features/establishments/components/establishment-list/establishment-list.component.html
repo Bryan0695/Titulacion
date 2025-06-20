@@ -1,0 +1,168 @@
+<div class="card">
+  <h2>Listado de Establecimientos del SRI</h2>
+  
+  <p-table 
+    #dt
+    [value]="establishments" 
+    rowGroupMode="rowspan" 
+    groupRowsBy="nombreComercial" 
+    sortField="nombreComercial" 
+    sortMode="single"
+    [rows]="10"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [loading]="loading"
+    [paginator]="true"
+    [globalFilterFields]="['nombreComercial', 'ubicacion.provincia', 'actividad', 'estadoCatastro']"
+    [tableStyle]="{ 'min-width': '100%' }">
+    
+    <ng-template #caption>
+      <div class="flex justify-between items-center">
+        <h3 class="m-0">Establecimientos</h3>
+        <div class="flex gap-2">
+          <p-iconfield iconPosition="left">
+            <p-inputicon>
+              <i class="pi pi-search"></i>
+            </p-inputicon>
+            <input 
+              pInputText 
+              type="text" 
+              [(ngModel)]="searchValue"
+              (input)="onGlobalFilter($event, dt)" 
+              placeholder="Buscar establecimiento..." />
+          </p-iconfield>
+          <p-button 
+            icon="pi pi-filter-slash" 
+            label="Limpiar" 
+            [outlined]="true" 
+            (onClick)="clearSearch(dt)" />
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template #header>
+      <tr>
+        <th style="width:5%">Nro.</th>
+        <th style="width:20%">Nombre Comercial</th>
+        <th style="width:25%">Ubicación de Establecimiento</th>
+        <th style="width:20%">Actividad</th>
+        <th style="width:15%">Número de Registro</th>
+        <th style="width:10%">Estado Catastro</th>
+        <th style="width:15%">Opciones</th>
+      </tr>
+    </ng-template>
+
+    <ng-template #body let-establishment let-rowIndex="rowIndex" let-rowgroup="rowgroup" let-rowspan="rowspan">
+      <tr [ngClass]="{'closed-establishment': establishment.cerradoSri}">
+        <td>{{ rowIndex + 1 }}</td>
+        
+        <td *ngIf="rowgroup" [attr.rowspan]="rowspan">
+          <div class="flex items-center gap-2">
+            <span class="font-semibold">{{ establishment.nombreComercial }}</span>
+            @if (establishment.cerradoSri) {
+              <p-tag value="CERRADO SRI" severity="danger" />
+            }
+          </div>
+        </td>
+
+        <td>
+          @if (establishment.ubicacion.provincia) {
+            <div class="location-info">
+              <div><strong>{{ establishment.ubicacion.provincia }}</strong></div>
+              <div>{{ establishment.ubicacion.canton }}</div>
+              <div>{{ establishment.ubicacion.parroquia }}</div>
+              <div class="text-sm text-gray-600">{{ establishment.ubicacion.direccion }}</div>
+            </div>
+          } @else {
+            <span class="text-gray-500">null, null, null</span>
+          }
+        </td>
+
+        <td>
+          @if (establishment.actividad) {
+            <span>{{ establishment.actividad }}</span>
+          } @else {
+            <span class="text-gray-500">-</span>
+          }
+        </td>
+
+        <td>
+          @if (establishment.numeroRegistro !== 'Sin Registro') {
+            <div>
+              <div class="font-mono text-sm">{{ establishment.numeroRegistro }}</div>
+              @if (establishment.fechaRegistro) {
+                <div class="text-xs text-gray-600">{{ establishment.fechaRegistro | date:'dd \'de\' MMMM \'de\' yyyy' }}</div>
+              }
+            </div>
+          } @else {
+            <span class="text-gray-500">{{ establishment.numeroRegistro }}</span>
+          }
+        </td>
+
+        <td>
+          <p-tag 
+            [value]="establishment.estadoCatastro" 
+            [severity]="getSeverity(establishment.estadoCatastro)" />
+        </td>
+
+        <td>
+          <div class="flex gap-1">
+            @if (establishment.estadoCatastro === 'Sin Registro') {
+              <p-button 
+                icon="pi pi-plus" 
+                [rounded]="true" 
+                severity="success"
+                size="small"
+                pTooltip="Crear trámite"
+                (onClick)="crearTramite(establishment)" />
+            }
+            
+            @if (establishment.estadoCatastro === 'Registro PENDIENTE DE INSPECCION') {
+              <p-button 
+                icon="pi pi-plus" 
+                [rounded]="true" 
+                severity="success"
+                size="small"
+                pTooltip="Crear trámite"
+                (onClick)="crearTramite(establishment)" />
+              <p-button 
+                icon="pi pi-calendar" 
+                [rounded]="true" 
+                severity="info"
+                size="small"
+                pTooltip="Solicitar primera inspección"
+                (onClick)="solicitarInspeccion(establishment)" />
+              <p-button 
+                icon="pi pi-download" 
+                [rounded]="true" 
+                severity="primary"
+                size="small"
+                pTooltip="Descargar certificado"
+                (onClick)="descargarCertificado(establishment)" />
+            }
+            
+            @if (establishment.estadoCatastro === 'Revisar en "Ver Registros"') {
+              <p-button 
+                icon="pi pi-eye" 
+                [rounded]="true" 
+                severity="info"
+                size="small"
+                pTooltip="Ver registros"
+                (onClick)="verRegistros(establishment)" />
+            }
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template #emptymessage>
+      <tr>
+        <td colspan="7" class="text-center">
+          <div class="p-4">
+            <i class="pi pi-info-circle text-4xl text-gray-400 mb-2"></i>
+            <p class="text-gray-600">No se encontraron establecimientos.</p>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
