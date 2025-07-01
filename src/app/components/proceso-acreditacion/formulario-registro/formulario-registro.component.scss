@@ -1,0 +1,281 @@
+// ARCHIVO: src/app/components/proceso-acreditacion/formulario-registro/formulario-registro.component.scss
+
+.atencion-section {
+  background: #d1ecf1;
+  border: 1px solid #bee5eb;
+  border-radius: 6px;
+  padding: 15px;
+  margin-bottom: 20px;
+
+  h4 {
+    color: #0c5460;
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  p {
+    color: #0c5460;
+    margin: 0 0 10px 0;
+    line-height: 1.4;
+    font-size: 14px;
+  }
+
+  a {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 14px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.datos-sri-section, .datos-supercias-section {
+  background: #e2e3f3;
+  border: 1px solid #c8caf0;
+  border-radius: 6px;
+  padding: 20px;
+  margin-bottom: 20px;
+
+  h4 {
+    margin: 0 0 15px 0;
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+  }
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+
+  .full-width {
+    grid-column: span 2;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+    font-size: 14px;
+  }
+
+  .form-value {
+    color: #333;
+    font-size: 14px;
+    padding: 5px 0;
+  }
+
+  .status-activo {
+    color: #28a745;
+    font-weight: bold;
+  }
+}
+
+.form-section {
+  background: white;
+  padding: 20px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+
+  .form-control {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: white;
+
+    &:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+    }
+  }
+
+  .required {
+    color: #dc3545;
+  }
+}
+
+.documentos-inspeccion {
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 6px;
+  padding: 15px;
+  margin-bottom: 20px;
+
+  .documento-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .documento-checkbox {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .documento-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .documento-text {
+    flex: 1;
+    font-size: 13px;
+    line-height: 1.4;
+    color: #333;
+  }
+
+  .btn-subir {
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    flex-shrink: 0;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background: #0056b3;
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+  }
+}
+
+// Toggle Switch styles
+.documento-toggle {
+  flex-shrink: 0;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+}
+
+// Override PrimeNG toggle switch styles if needed
+::ng-deep {
+  .p-toggleswitch {
+    width: 3rem;
+    height: 1.75rem;
+    
+    .p-toggleswitch-slider {
+      background-color: #dee2e6;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+      
+      &:before {
+        background-color: white;
+        width: 1.25rem;
+        height: 1.25rem;
+        left: 0.25rem;
+        bottom: 0.25rem;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+      }
+    }
+    
+    &.p-toggleswitch-checked {
+      .p-toggleswitch-slider {
+        background-color: #007bff;
+        
+        &:before {
+          transform: translateX(1.25rem);
+        }
+      }
+    }
+    
+    &:not(.p-disabled):hover .p-toggleswitch-slider {
+      background-color: #c6c9cc;
+    }
+    
+    &.p-toggleswitch-checked:not(.p-disabled):hover .p-toggleswitch-slider {
+      background-color: #0056b3;
+    }
+  }
+}
+
+// Botón Guardar y Continuar - SIN ICONO
+.form-actions {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 6px;
+  text-align: center;
+  margin-top: 20px;
+  border: 1px solid #e9ecef;
+}
+
+.btn-guardar-continuar {
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 15px 30px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
+
+  &:hover:not(:disabled) {
+    background: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.4);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    opacity: 0.6;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+
+    .full-width {
+      grid-column: span 1;
+    }
+  }
+
+  .documento-item {
+    flex-direction: column;
+    align-items: stretch !important;
+    text-align: center;
+
+    .btn-subir {
+      align-self: center;
+      margin-top: 10px;
+    }
+  }
+}

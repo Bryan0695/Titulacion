@@ -1,0 +1,115 @@
+<h2>Proceso de Acreditación de Actividades Turísticas</h2>
+
+<div class="container">
+  <div class="info">
+    <div>
+      <label>Establecimiento Seleccionado:</label>
+      {{ establecimiento.id }} - {{ establecimiento.nombre }}
+    </div>
+    <div>
+      <label>Trámite Seleccionado:</label>
+      {{ tramite }}
+    </div>
+    <div>
+      <label>Número de Registro:</label>
+      {{ numeroRegistro }}
+    </div>
+  </div>
+  
+  <div class="button-container">
+    <button class="back-button" (click)="regresarAEstablecimientos()">
+      Regresar a Establecimientos
+    </button>
+  </div>
+</div>
+
+<!-- Declaración Juramentada -->
+<div class="declaracion-juramentada">
+  <h3>Declaración Juramentada</h3>
+  <p>Declaro, bajo juramento, que los datos consignados en este sistema reflejan la realidad y autorizo al Ministerio de Turismo a verificar la información en cualquier momento, al tiempo que me sujeto, a las sanciones previstas en la ley en caso de falsedad o perjurio.</p>
+</div>
+
+<!-- Stepper Navigation -->
+<div class="stepper-container">
+  <div class="stepper-header">
+    <!-- Step 1: Datos generales de Persona Natural/Jurídica -->
+    <div class="step-item" [class.active]="pasoActual === 1" [class.completed]="pasoActual > 1">
+      <div class="step-number">1</div>
+      <div class="step-label">Datos generales de Persona Natural / Jurídica</div>
+    </div>
+    
+    <!-- Step 2: Datos generales del establecimiento -->
+    <div class="step-item" [class.active]="pasoActual === 2" [class.completed]="pasoActual > 2">
+      <div class="step-number">2</div>
+      <div class="step-label">Datos generales del establecimiento</div>
+    </div>
+    
+    <!-- Step 3: Acreditación Turística -->
+    <div class="step-item" [class.active]="pasoActual === 3" [class.completed]="pasoActual > 3">
+      <div class="step-number">3</div>
+      <div class="step-label">Acreditación Turística</div>
+    </div>
+  </div>
+
+  <!-- Step Content -->
+  <div class="step-content">
+    
+    <!-- Paso 1: Formulario de Datos Generales de Persona -->
+    @if (pasoActual === 1) {
+      <app-formulario-registro 
+        [establecimiento]="establecimiento"
+        (formularioCompleto)="onPasoCompletado($event)">
+      </app-formulario-registro>
+    }
+    
+    <!-- Paso 2: Documentos Requeridos -->
+    @if (pasoActual === 2) {
+      <app-documentos-requeridos 
+        [tipoTramite]="tramite"
+        [establecimiento]="establecimiento"
+        (documentosCompletos)="onPasoCompletado($event)">
+      </app-documentos-requeridos>
+    }
+    
+    <!-- Paso 3: Estado del Trámite -->
+    @if (pasoActual === 3) {
+      <app-estado-tramite 
+        [numeroRegistro]="numeroRegistro"
+        [establecimiento]="establecimiento">
+      </app-estado-tramite>
+    }
+    
+  </div>
+
+  <!-- Navigation Buttons -->
+  <div class="stepper-navigation">
+    <button 
+      class="btn-anterior" 
+      (click)="pasoAnterior()" 
+      [disabled]="pasoActual === 1">
+      ← Anterior
+    </button>
+    
+    <div class="paso-info">
+      Paso {{ pasoActual }} de {{ totalPasos }}
+    </div>
+    
+    @if (pasoActual < totalPasos && pasoActual !== 1) {
+      <button 
+        class="btn-siguiente" 
+        (click)="siguientePaso()" 
+        [disabled]="!puedeAvanzar">
+        Siguiente →
+      </button>
+    } @else if (pasoActual === totalPasos) {
+      <button 
+        class="btn-finalizar" 
+        (click)="finalizarProceso()">
+        Finalizar Proceso
+      </button>
+    } @else {
+      <!-- En el paso 1, el botón está dentro del formulario -->
+      <div class="btn-placeholder"></div>
+    }
+  </div>
+</div>

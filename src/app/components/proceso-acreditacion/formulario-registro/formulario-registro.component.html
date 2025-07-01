@@ -1,0 +1,113 @@
+<!-- Atención Section -->
+<div class="atencion-section">
+  <h4>Atención</h4>
+  <p>La información presentada a continuación es proporcionada por el Servicio de Rentas Internas, esta sección tiene carácter informativo, por favor si desea actualizarla debe realizar el trámite en la entidad correspondiente.</p>
+  <a href="#" class="link-sri">Ir al Sitio Web del SRI</a>
+</div>
+
+<!-- Datos del SRI -->
+<div class="datos-sri-section">
+  <h4>Datos del SRI</h4>
+  <div class="form-grid">
+    <div class="form-group">
+      <label>RUC:</label>
+      <span class="form-value">1752072610001</span>
+    </div>
+    <div class="form-group">
+      <label>Estado:</label>
+      <span class="form-value status-activo">ACTIVO</span>
+    </div>
+    <div class="form-group">
+      <label>Razón Social:</label>
+      <span class="form-value">DELI INTERNACIONAL S.A.</span>
+    </div>
+    <div class="form-group">
+      <label>Tipo de Contribuyente:</label>
+      <span class="form-value">SCD</span>
+    </div>
+    <div class="form-group">
+      <label>Identificación Representante Legal:</label>
+      <span class="form-value">1764158212</span>
+    </div>
+    <div class="form-group">
+      <label>Nombre Representante Legal:</label>
+      <span class="form-value">GUARDERAS RIOFRIO ESTEBAN</span>
+    </div>
+    <div class="form-group full-width">
+      <label>Actividad Económica Principal:</label>
+      <span class="form-value">RESTAURANTES, CEVICHERÍAS, PICANTERÍAS, CAFETERÍAS, ETCÉTERA, INCLUIDO COMIDA PARA LLEVAR</span>
+    </div>
+  </div>
+</div>
+
+<!-- Superintendencia de Compañías -->
+<div class="atencion-section">
+  <h4>Atención</h4>
+  <p>La información presentada a continuación es proporcionada por la Superintendencia de Compañías, esta sección tiene carácter informativo, por favor si desea actualizarla debe realizar el trámite en la entidad correspondiente. Si su compañía no es regulada por la Superintendencia de Compañías, seleccione la personería jurídica correspondiente, del combo de selección mostrado a continuación.</p>
+  <a href="#" class="link-supercias">Ir al Sitio Web de la Superintendencia de Compañías</a>
+</div>
+
+<!-- Datos Superintendencia -->
+<div class="datos-supercias-section">
+  <h4>Datos de la Superintendencia De Compañías</h4>
+  <div class="form-group">
+    <label>Número de Expediente:</label>
+    <span class="form-value">157271</span>
+  </div>
+</div>
+
+<!-- Tipo de Personería Jurídica -->
+<form [formGroup]="formularioRegistro" (ngSubmit)="onSubmit()">
+  <div class="form-section">
+    <div class="form-group">
+      <label for="tipoPersoneria">Tipo de Personería Jurídica: <span class="required">*</span></label>
+      <select id="tipoPersoneria" formControlName="tipoPersoneria" class="form-control">
+        <option value="">Seleccione</option>
+        <option value="sociedad_anonima">Sociedad Anónima</option>
+        <option value="sociedad_limitada">Sociedad de Responsabilidad Limitada</option>
+        <option value="compania_economia_mixta">Compañía de Economía Mixta</option>
+        <option value="empresa_publica">Empresa Pública</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Documentos requeridos con Toggle Switches -->
+  <div class="documentos-inspeccion">
+    <div class="documento-item">
+      <div class="documento-toggle">
+        <p-toggleswitch 
+          formControlName="documento1Presentado">
+          <ng-template #handle let-checked="checked">
+            <i [ngClass]="['!text-xs', 'pi', checked ? 'pi-check' : 'pi-times']"></i>
+          </ng-template>
+        </p-toggleswitch>
+      </div>
+      <span class="documento-icon"></span>
+      <span class="documento-text">Al momento de la inspección usted deberá presentar el "Nombramiento vigente del o los representantes legales, debidamente inscrito ante la autoridad correspondiente"</span>
+    </div>
+
+    <div class="documento-item">
+      <div class="documento-toggle">
+        <p-toggleswitch 
+          formControlName="documento2Presentado">
+          <ng-template #handle let-checked="checked">
+            <i [ngClass]="['!text-xs', 'pi', checked ? 'pi-check' : 'pi-times']"></i>
+          </ng-template>
+        </p-toggleswitch>
+      </div>
+      <span class="documento-icon"></span>
+      <span class="documento-text">Al momento de la inspección usted deberá presentar el "Documento constitutivo de la misma debidamente aprobada por la autoridad correspondiente, en el que conste como su objeto social el desarrollo de la actividad turística"</span>
+    </div>
+  </div>
+
+  <!-- Botón Guardar y Continuar -->
+  <div class="form-actions">
+    <button 
+      type="button" 
+      class="btn-guardar-continuar"
+      [disabled]="!formularioValido"
+      (click)="onSubmit()">
+      Guardar y Continuar
+    </button>
+  </div>
+</form>

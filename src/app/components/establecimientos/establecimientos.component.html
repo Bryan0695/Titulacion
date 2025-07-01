@@ -1,0 +1,219 @@
+<div class="establecimiento-container">
+  <div class="card">
+    <div class="card-header">
+      <h2>Listado de Establecimientos del SRI</h2>
+      
+      <!-- Buscador -->
+      <div class="search-container">
+        <div class="p-inputgroup">
+          <span class="p-inputgroup-addon">
+            <i class="pi pi-search"></i>
+          </span>
+          <input 
+            type="text" 
+            pInputText 
+            placeholder="Buscar..." 
+            [(ngModel)]="searchValue"
+            (keyup.enter)="onSearch()"
+            class="search-input"
+          />
+          @if (searchValue) {
+            <button 
+              pButton 
+              type="button" 
+              icon="pi pi-times" 
+              class="p-button-text"
+              (click)="clearSearch()"
+              pTooltip="Limpiar búsqueda"
+            ></button>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabla de establecimientos con agrupación -->
+    <p-table 
+      [value]="establecimientos" 
+      [loading]="loading"
+      [paginator]="false"
+      [tableStyle]="{ 'width': '100%', 'table-layout': 'fixed' }"
+      responsiveLayout="stack"
+      styleClass="p-datatable-sm tabla-custom"
+      [scrollable]="false"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="text-center" style="width: 60px;">
+            <div class="header-content">
+              Nro
+            </div>
+          </th>
+          <th style="width: 150px;">
+            <div class="header-content">
+              Nombre Comercial
+            </div>
+          </th>
+          <th style="width: 180px;">
+            <div class="header-content">
+              Ubicación de Establecimiento
+            </div>
+          </th>
+          <th style="width: 150px;">
+            <div class="header-content">
+              Actividad
+            </div>
+          </th>
+          <th style="width: 150px;">
+            <div class="header-content">
+              Número de Registro
+            </div>
+          </th>
+          <th style="width: 130px;">
+            <div class="header-content">
+              Estado Catastro
+            </div>
+          </th>
+          <th class="text-center" style="width: 80px;">
+            <div class="header-content">
+              Opciones
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+      
+      <ng-template pTemplate="body" let-establecimiento let-rowIndex="rowIndex">
+        <tr [class]="rowIndex % 2 === 1 ? 'row-alternate' : ''">
+          <td class="text-center">{{ first + rowIndex + 1 }}</td>
+          
+          <!-- Nombre Comercial con agrupación -->
+          <td [attr.rowspan]="getRowSpan(establecimiento, rowIndex)" 
+              *ngIf="isFirstInGroup(establecimiento, rowIndex)"
+              class="nombre-comercial-cell">
+            <div class="establecimiento-nombre">
+              {{ establecimiento.nombreComercial }}
+              @if (establecimiento.estadoCategoria === 'CERRADO SRI' || establecimiento.estadoCategoria === 'ELIMINADO') {
+                <br>
+                <span class="badge-cerrado">{{ establecimiento.estadoCategoria }}</span>
+              }
+            </div>
+          </td>
+          
+          <td class="ubicacion-cell">
+            @if (establecimiento.ubicacionEstablecimientos !== 'null, null, null') {
+              <div class="ubicacion-content">
+                @for (linea of establecimiento.ubicacionEstablecimientos.split(', '); track linea) {
+                  <div>{{ linea }}</div>
+                }
+              </div>
+            } @else {
+              <span class="text-muted">null, null, null</span>
+            }
+          </td>
+          
+          <td class="actividad-cell">
+            @if (establecimiento.actividad) {
+              <div class="actividad-content">
+                @for (linea of establecimiento.actividad.split(', '); track linea) {
+                  <div>{{ linea }}</div>
+                }
+              </div>
+            }
+          </td>
+          
+          <td class="registro-cell">
+            <div class="registro-content">
+              @if (establecimiento.numeroDeRegistro !== 'Sin Registro' && establecimiento.numeroDeRegistro !== 'Revisar en "Ver Registros"') {
+                <div>{{ establecimiento.numeroDeRegistro }}</div>
+                @if (establecimiento.fechaRegistro) {
+                  <div class="fecha-registro">{{ establecimiento.fechaRegistro }}</div>
+                }
+              } @else {
+                <span>{{ establecimiento.numeroDeRegistro }}</span>
+              }
+            </div>
+          </td>
+          
+          <td class="estado-cell">
+            @if (establecimiento.estadoCategoria && establecimiento.estadoCategoria !== '') {
+              <span>{{ establecimiento.estadoCategoria }}</span>
+            }
+          </td>
+          
+          <td class="opciones-cell">
+            <div class="opciones-container">
+              
+              <!-- Botón Verde: Crear Trámite como botón simple con menú -->
+              <p-button 
+                icon="pi pi-plus"
+                styleClass="p-button-sm p-button-success boton-cuadrado"
+                severity="success"
+                pTooltip="Crear Trámite"
+                (onClick)="mostrarMenuTramite($event, establecimiento.id)"
+              ></p-button>
+
+              <!-- Botón Azul: Solicitar Inspección (solo si PENDIENTE) -->
+              @if (establecimiento.estadoCategoria.includes('PENDIENTE')) {
+                <button 
+                  pButton 
+                  type="button" 
+                  icon="pi pi-calendar" 
+                  class="p-button-sm p-button-primary boton-cuadrado"
+                  pTooltip="Solicitar Primera Inspección"
+                  (click)="solicitarInspeccion(establecimiento.id)"
+                ></button>
+              }
+
+              <!-- Botón Ver Registros (solo si "Revisar en Ver Registros") -->
+              @if (establecimiento.numeroDeRegistro === 'Revisar en "Ver Registros"') {
+                <button 
+                  pButton 
+                  type="button" 
+                  icon="pi pi-eye" 
+                  class="p-button-sm p-button-info boton-cuadrado"
+                  pTooltip="Ver Registros"
+                  (click)="verRegistros(establecimiento.id)"
+                ></button>
+              }
+
+              <!-- Botón Morado: Descargar (solo si PENDIENTE o RATIFICADO) -->
+              @if (establecimiento.estadoCategoria.includes('PENDIENTE') || establecimiento.estadoCategoria.includes('RATIFICADO')) {
+                <button 
+                  pButton 
+                  type="button" 
+                  icon="pi pi-download" 
+                  class="p-button-sm p-button-help boton-cuadrado"
+                  pTooltip="Descargar Certificado"
+                  (click)="descargarCertificado(establecimiento.id)"
+                ></button>
+              }
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="7" class="text-center">
+            <div class="empty-message">
+              <i class="pi pi-info-circle" style="font-size: 2rem; color: var(--text-color-secondary);"></i>
+              <p>No se encontraron establecimientos</p>
+              @if (searchValue) {
+                <p class="text-sm">Intenta con otros términos de búsqueda</p>
+              }
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <!-- Paginador -->
+    <p-paginator
+      [rows]="rows"
+      [totalRecords]="totalRecords"
+      [first]="first"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      (onPageChange)="onPageChange($event)"
+      styleClass="paginator-custom"
+    ></p-paginator>
+  </div>
+</div>

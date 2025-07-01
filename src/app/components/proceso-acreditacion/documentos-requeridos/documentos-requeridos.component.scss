@@ -1,0 +1,98 @@
+    .documentos-container { 
+      padding: 20px; 
+      background: #f8f9fa; 
+      border-radius: 8px; 
+      margin: 20px 0;
+    }
+    .documentos-info {
+      background: white;
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      border-left: 4px solid #2196f3;
+    }
+    .documentos-lista { 
+      list-style: none; 
+      padding: 0; 
+      margin: 0;
+    }
+    .documento-item { 
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px; 
+      margin: 8px 0; 
+      background: white; 
+      border-radius: 6px; 
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .documento-info {
+      display: flex;
+      align-items: center;
+      flex: 1;
+    }
+    .icono-documento {
+      margin-right: 10px;
+      font-size: 20px;
+    }
+    .documento-nombre {
+      font-weight: 500;
+      color: #333;
+    }
+    .documento-acciones {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .estado { 
+      padding: 4px 12px; 
+      border-radius: 20px; 
+      font-size: 12px; 
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    .pendiente { 
+      background: #fff3cd; 
+      color: #856404; 
+      border: 1px solid #ffeaa7;
+    }
+    .subido { 
+      background: #d4edda; 
+      color: #155724; 
+      border: 1px solid #c3e6cb;
+    }
+    .validado { 
+      background: #cce5ff; 
+      color: #004085; 
+      border: 1px solid #b3d7ff;
+    }
+    .btn-subir, .btn-ver, .btn-eliminar { 
+      padding: 6px 12px; 
+      border: none; 
+      border-radius: 4px; 
+      cursor: pointer; 
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .btn-subir { 
+      background: #007bff; 
+      color: white; 
+    }
+    .btn-ver { 
+      background: #28a745; 
+      color: white; 
+    }
+    .btn-eliminar { 
+      background: #dc3545; 
+      color: white; 
+    }
+    .resumen {
+      background: white;
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 20px;
+    }
+    .mensaje-exito {
+      color: #155724;
+      font-weight: bold;
+    }

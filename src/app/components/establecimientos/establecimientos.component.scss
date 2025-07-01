@@ -1,0 +1,331 @@
+.establecimiento-container {
+  padding: 2rem;
+  background-color: #f3f4f6;
+  min-height: 100vh;
+
+  .card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+
+    .card-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+
+      h2 {
+        margin: 0;
+        color: #374151;
+        font-size: 1.25rem;
+        font-weight: 600;
+      }
+
+      .search-container {
+        display: flex;
+        align-items: center;
+        position: relative;
+
+        .search-input {
+          min-width: 300px;
+          padding-left: 2.5rem;
+        }
+      }
+    }
+  }
+}
+
+// Estilos para la tabla
+:host ::ng-deep {
+  .tabla-custom {
+    width: 100%;
+    table-layout: fixed;
+
+    .p-datatable-thead > tr > th {
+      background: #f9fafb;
+      color: #6b7280;
+      font-weight: 500;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: 1px solid #e5e7eb;
+      padding: 1rem 0.75rem;
+      white-space: normal;
+      vertical-align: middle;
+      min-height: 60px;
+      overflow: hidden;
+
+      .header-content {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        line-height: 1.2;
+        word-wrap: break-word;
+      }
+    }
+
+    .p-datatable-tbody > tr > td {
+      border: 1px solid #e5e7eb;
+      padding: 0.75rem;
+      vertical-align: top;
+      font-size: 0.875rem;
+      color: #6b7280;
+      word-wrap: break-word;
+      overflow: hidden;
+    }
+
+    // Filas alternadas como en el diseño original
+    .p-datatable-tbody > tr.row-alternate {
+      background: #f9fafb;
+    }
+
+    .p-datatable-tbody > tr:hover {
+      background: #f3f4f6;
+    }
+
+    // Estilos para celdas agrupadas
+    .nombre-comercial-cell {
+      background: white !important;
+      font-weight: 600;
+      color: #111827 !important;
+      vertical-align: top;
+      
+      .establecimiento-nombre {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    }
+
+    .ubicacion-cell {
+      .ubicacion-content {
+        line-height: 1.4;
+        
+        div {
+          margin-bottom: 0.25rem;
+          
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+      
+      .text-muted {
+        color: #9ca3af;
+      }
+    }
+
+    .actividad-cell {
+      .actividad-content {
+        line-height: 1.4;
+        
+        div {
+          margin-bottom: 0.25rem;
+          
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+
+    .registro-cell {
+      .registro-content {
+        line-height: 1.4;
+        
+        .fecha-registro {
+          font-size: 0.75rem;
+          color: #9ca3af;
+          margin-top: 0.25rem;
+        }
+      }
+    }
+
+    .estado-cell {
+      font-size: 0.875rem;
+    }
+
+    .opciones-cell {
+      .opciones-container {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        justify-content: center;
+        flex-wrap: nowrap;
+      }
+    }
+  }
+
+  // Badge personalizado para "CERRADO SRI"
+  .badge-cerrado {
+    background-color: #ef4444;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    display: inline-block;
+  }
+
+  // Estilos para botones específicos
+  .p-button {
+    &.p-button-sm {
+      padding: 0.5rem;
+      font-size: 0.875rem;
+      min-width: 2.25rem;
+      height: 2.25rem;
+    }
+
+    &.boton-cuadrado {
+      width: 1.75rem !important;
+      height: 1.75rem !important;
+      padding: 0.25rem !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      
+      .p-button-icon {
+        font-size: 0.75rem;
+        margin: 0;
+      }
+    }
+
+    &.p-button-success {
+      background: #10b981;
+      border-color: #10b981;
+
+      &:hover:not(:disabled) {
+        background: #059669;
+        border-color: #047857;
+      }
+    }
+
+    &.p-button-primary {
+      background: #3b82f6;
+      border-color: #3b82f6;
+
+      &:hover:not(:disabled) {
+        background: #2563eb;
+        border-color: #1d4ed8;
+      }
+    }
+
+    &.p-button-info {
+      background: #6366f1;
+      border-color: #6366f1;
+
+      &:hover:not(:disabled) {
+        background: #4f46e5;
+        border-color: #4338ca;
+      }
+    }
+
+    &.p-button-help {
+      background: #8b5cf6;
+      border-color: #8b5cf6;
+
+      &:hover:not(:disabled) {
+        background: #7c3aed;
+        border-color: #6d28d9;
+      }
+    }
+  }
+
+  // Estilos para el input group del buscador
+  .p-inputgroup {
+    .p-inputgroup-addon {
+      background: #f9fafb;
+      border: 1px solid #d1d5db;
+      color: #6b7280;
+      padding: 0.75rem;
+    }
+
+    .p-inputtext {
+      border-left: none;
+      border-color: #d1d5db;
+      
+      &:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      }
+    }
+  }
+
+  // Estilos para el paginador
+  .paginator-custom {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-top: none;
+
+    .p-paginator-pages .p-paginator-page.p-highlight {
+      background: #3b82f6;
+      border-color: #3b82f6;
+      color: white;
+    }
+  }
+}
+
+// Estilos específicos para elementos de la tabla
+.establecimiento-nombre {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.registro-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.empty-message {
+  padding: 2rem;
+  text-align: center;
+  color: #6b7280;
+
+  i {
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    margin: 0.5rem 0;
+  }
+
+  .text-sm {
+    font-size: 0.875rem;
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .establecimiento-container {
+    padding: 1rem;
+
+    .card-header {
+      flex-direction: column;
+      align-items: stretch;
+
+      .search-container .search-input {
+        min-width: 100%;
+      }
+    }
+  }
+
+  :host ::ng-deep {
+    .tabla-custom .p-datatable-tbody > tr > td {
+      padding: 0.75rem;
+      font-size: 0.75rem;
+    }
+
+    .opciones-container {
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+  }
+}

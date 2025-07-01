@@ -1,0 +1,357 @@
+h2 {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 10px;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.info {
+  line-height: 2;
+  flex: 1;
+
+  label {
+    font-weight: bold;
+    display: inline-block;
+    width: 180px;
+    color: #555;
+  }
+
+  div {
+    margin-bottom: 8px;
+  }
+}
+
+.back-button {
+  background-color: #3f51b5;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #303f9f;
+  }
+
+  &::before {
+    content: '← ';
+  }
+}
+
+.button-container {
+  margin-top: 10px;
+}
+
+// Declaración Juramentada
+.declaracion-juramentada {
+  background-color: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+
+  h3 {
+    color: #856404;
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  p {
+    color: #856404;
+    margin: 0;
+    line-height: 1.5;
+    font-size: 14px;
+  }
+}
+
+// Stepper Container
+.stepper-container {
+  background: white;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
+
+// Stepper Header
+.stepper-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  position: relative;
+
+  // Línea conectora entre pasos
+  &::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 40px;
+    right: 40px;
+    height: 2px;
+    background: #e0e0e0;
+    z-index: 1;
+  }
+}
+
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+  position: relative;
+  z-index: 2;
+
+  &.active {
+    .step-number {
+      background: #007bff;
+      color: white;
+      border-color: #007bff;
+    }
+
+    .step-label {
+      color: #007bff;
+      font-weight: bold;
+    }
+  }
+
+  &.completed {
+    .step-number {
+      background: #28a745;
+      color: white;
+      border-color: #28a745;
+
+      &::after {
+        content: '✓';
+        font-size: 14px;
+      }
+    }
+
+    .step-label {
+      color: #28a745;
+    }
+  }
+}
+
+.step-number {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #f8f9fa;
+  border: 2px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
+
+.step-label {
+  font-size: 14px;
+  color: #6c757d;
+  max-width: 150px;
+  transition: all 0.3s ease;
+}
+
+// Step Content
+.step-content {
+  min-height: 400px;
+  padding: 20px 0;
+}
+
+// Navigation
+.stepper-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.btn-anterior, .btn-siguiente, .btn-finalizar {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.btn-anterior {
+  background: #6c757d;
+  color: white;
+
+  &:hover:not(:disabled) {
+    background: #5a6268;
+  }
+}
+
+.btn-siguiente {
+  background: #007bff;
+  color: white;
+
+  &:hover:not(:disabled) {
+    background: #0056b3;
+  }
+}
+
+.btn-finalizar {
+  background: #28a745;
+  color: white;
+
+  &:hover {
+    background: #218838;
+  }
+}
+
+.paso-info {
+  font-size: 14px;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .button-container {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .info label {
+    width: 100%;
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .stepper-header {
+    flex-direction: column;
+    gap: 20px;
+
+    &::before {
+      display: none;
+    }
+  }
+
+  .step-item {
+    flex-direction: row;
+    gap: 15px;
+  }
+
+  .step-label {
+    max-width: none;
+  }
+
+  .stepper-navigation {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+
+// Estilos temporales para el demo
+.placeholder-content {
+  background: #f8f9fa;
+  border: 2px dashed #dee2e6;
+  border-radius: 8px;
+  padding: 30px;
+  text-align: center;
+
+  h4 {
+    color: #495057;
+    margin-bottom: 15px;
+  }
+
+  p {
+    color: #6c757d;
+    margin-bottom: 20px;
+  }
+}
+
+.temp-form, .temp-docs, .temp-status {
+  background: white;
+  padding: 20px;
+  border-radius: 6px;
+  margin-top: 20px;
+
+  label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  select {
+    width: 100%;
+    max-width: 300px;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 15px;
+  }
+}
+
+.btn-temp, .btn-upload {
+  background: #28a745;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  
+  &:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+  }
+}
+
+.btn-upload {
+  background: #007bff;
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+.doc-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.status-item {
+  padding: 10px;
+  margin: 5px 0;
+  background: #e9ecef;
+  border-radius: 4px;
+.btn-placeholder {
+  width: 120px; // Espacio para mantener el layout balanceado
+}
+}

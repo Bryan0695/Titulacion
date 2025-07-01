@@ -1,0 +1,60 @@
+<div class="estado-container">
+  <h3>Estado del Trámite</h3>
+  <div class="tramite-info">
+    <div class="info-item">
+      <strong>Establecimiento:</strong> {{ establecimiento?.nombre }}
+    </div>
+    <div class="info-item">
+      <strong>Número de Registro:</strong> 
+      <span [class]="numeroRegistro ? 'con-registro' : 'sin-registro'">
+        {{ numeroRegistro || 'Pendiente de asignación' }}
+      </span>
+    </div>
+    <div class="info-item">
+      <strong>Progreso:</strong> {{ pasoActual + 1 }} de {{ pasosTramite.length }}
+    </div>
+  </div>
+
+  <div class="timeline">
+    @for (paso of pasosTramite; track paso.titulo; let i = $index) {
+      <div class="timeline-item" 
+           [class.completado]="i < pasoActual" 
+           [class.activo]="i === pasoActual"
+           [class.pendiente]="i > pasoActual">
+        <div class="timeline-marker">
+          @if (i < pasoActual) {
+            <span class="check">✓</span>
+          } @else {
+            <span class="numero">{{ i + 1 }}</span>
+          }
+        </div>
+        <div class="timeline-content">
+          <h4>{{ paso.titulo }}</h4>
+          <p>{{ paso.descripcion }}</p>
+          @if (paso.fecha !== 'Pendiente') {
+            <small class="fecha">{{ paso.fecha }}</small>
+          } @else {
+            <small class="fecha pendiente-text">{{ paso.fecha }}</small>
+          }
+          @if (paso.observaciones) {
+            <div class="observaciones">
+              <strong>Observaciones:</strong> {{ paso.observaciones }}
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="acciones">
+    @if (pasoActual < pasosTramite.length - 1) {
+      <button class="btn-siguiente" (click)="siguientePaso()">
+        Continuar con el proceso
+      </button>
+    } @else {
+      <div class="proceso-completado">
+        🎉 ¡Proceso de acreditación completado!
+      </div>
+    }
+  </div>
+</div>

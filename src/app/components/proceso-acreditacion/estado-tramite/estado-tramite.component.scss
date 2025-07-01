@@ -1,0 +1,124 @@
+    .estado-container { 
+      padding: 20px; 
+      background: white;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+    .tramite-info {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 25px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 10px;
+    }
+    .info-item {
+      padding: 8px 0;
+    }
+    .con-registro {
+      color: #28a745;
+      font-weight: bold;
+    }
+    .sin-registro {
+      color: #ffc107;
+      font-style: italic;
+    }
+    .timeline { 
+      position: relative; 
+      padding-left: 30px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #e9ecef;
+    }
+    .timeline-item { 
+      position: relative;
+      margin-bottom: 30px; 
+      padding-left: 25px;
+    }
+    .timeline-marker { 
+      position: absolute; 
+      left: -22px; 
+      width: 30px; 
+      height: 30px; 
+      border-radius: 50%; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      font-weight: bold;
+      font-size: 14px;
+      border: 3px solid #fff;
+      box-shadow: 0 0 0 2px #e9ecef;
+    }
+    .timeline-item.completado .timeline-marker { 
+      background: #28a745; 
+      color: white; 
+      box-shadow: 0 0 0 2px #28a745;
+    }
+    .timeline-item.activo .timeline-marker { 
+      background: #007bff; 
+      color: white; 
+      box-shadow: 0 0 0 2px #007bff;
+      animation: pulse 2s infinite;
+    }
+    .timeline-item.pendiente .timeline-marker { 
+      background: #e9ecef; 
+      color: #6c757d; 
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 2px #007bff; }
+      50% { box-shadow: 0 0 0 6px rgba(0, 123, 255, 0.3); }
+      100% { box-shadow: 0 0 0 2px #007bff; }
+    }
+    .timeline-content h4 { 
+      margin: 0 0 8px 0; 
+      color: #333;
+    }
+    .timeline-content p { 
+      margin: 0 0 8px 0; 
+      color: #666; 
+      line-height: 1.4;
+    }
+    .fecha {
+      color: #999;
+      font-size: 12px;
+    }
+    .pendiente-text {
+      color: #ffc107;
+      font-weight: bold;
+    }
+    .observaciones {
+      background: #fff3cd;
+      padding: 8px;
+      border-radius: 4px;
+      margin-top: 8px;
+      font-size: 13px;
+    }
+    .acciones {
+      margin-top: 30px;
+      text-align: center;
+    }
+    .btn-siguiente {
+      background: #007bff;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .proceso-completado {
+      background: #d4edda;
+      color: #155724;
+      padding: 20px;
+      border-radius: 6px;
+      font-size: 18px;
+      font-weight: bold;
+    }
