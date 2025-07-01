@@ -1,0 +1,117 @@
+<div class="personal-establecimiento-container">
+  
+  <!-- Título -->
+  <div class="titulo-seccion">
+    <h3>Personal del Establecimiento: <span class="required">(*)</span> <span class="contador">{{ totalPersonal }}</span></h3>
+  </div>
+
+  <!-- Formulario -->
+  <form [formGroup]="formularioPersonal" class="formulario-personal">
+    
+    <!-- Primera fila: Hombres -->
+    <div class="fila-campos">
+      
+      <!-- Total de hombres que trabajan en el establecimiento -->
+      <div class="campo-grupo">
+        <label class="campo-label">
+          Total de hombres, que trabajan en el establecimiento:
+        </label>
+        <div class="input-con-spinner">
+          <input 
+            type="number" 
+            formControlName="totalHombres"
+            class="input-numero"
+            min="0"
+            (change)="validarDiscapacidadHombres()">
+          <div class="spinner-botones">
+            <button type="button" class="btn-spinner btn-arriba" (click)="incrementarCampo('totalHombres')">▲</button>
+            <button type="button" class="btn-spinner btn-abajo" (click)="decrementarCampo('totalHombres')">▼</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Del total hombres, cuantos tienen discapacidad -->
+      <div class="campo-grupo">
+        <label class="campo-label">
+          Del total hombres, cuantos tienen discapacidad:
+        </label>
+        <div class="input-con-spinner">
+          <input 
+            type="number" 
+            formControlName="hombresDiscapacidad"
+            class="input-numero"
+            min="0"
+            [max]="formularioPersonal.get('totalHombres')?.value || 0"
+            (change)="validarDiscapacidadHombres()">
+          <div class="spinner-botones">
+            <button type="button" class="btn-spinner btn-arriba" (click)="incrementarCampo('hombresDiscapacidad')">▲</button>
+            <button type="button" class="btn-spinner btn-abajo" (click)="decrementarCampo('hombresDiscapacidad')">▼</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Segunda fila: Mujeres -->
+    <div class="fila-campos">
+      
+      <!-- Total de mujeres que trabajan en el establecimiento -->
+      <div class="campo-grupo">
+        <label class="campo-label">
+          Total de mujeres, que trabajan en el establecimiento:
+        </label>
+        <div class="input-con-spinner">
+          <input 
+            type="number" 
+            formControlName="totalMujeres"
+            class="input-numero"
+            min="0"
+            (change)="validarDiscapacidadMujeres()">
+          <div class="spinner-botones">
+            <button type="button" class="btn-spinner btn-arriba" (click)="incrementarCampo('totalMujeres')">▲</button>
+            <button type="button" class="btn-spinner btn-abajo" (click)="decrementarCampo('totalMujeres')">▼</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Del total mujeres, cuantas tienen discapacidad -->
+      <div class="campo-grupo">
+        <label class="campo-label">
+          Del total mujeres, cuantas tienen discapacidad:
+        </label>
+        <div class="input-con-spinner">
+          <input 
+            type="number" 
+            formControlName="mujeresDiscapacidad"
+            class="input-numero"
+            min="0"
+            [max]="formularioPersonal.get('totalMujeres')?.value || 0"
+            (change)="validarDiscapacidadMujeres()">
+          <div class="spinner-botones">
+            <button type="button" class="btn-spinner btn-arriba" (click)="incrementarCampo('mujeresDiscapacidad')">▲</button>
+            <button type="button" class="btn-spinner btn-abajo" (click)="decrementarCampo('mujeresDiscapacidad')">▼</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </form>
+
+  <!-- Resumen (opcional para debug) -->
+  <div class="resumen-personal" *ngIf="totalPersonal > 0">
+    <div class="resumen-item">
+      <strong>Total Personal:</strong> {{ totalPersonal }} personas
+    </div>
+    <div class="resumen-item">
+      <strong>Con Discapacidad:</strong> {{ totalDiscapacidad }} personas
+    </div>
+    <div class="resumen-item">
+      <strong>Estado:</strong> 
+      <span [class]="esFormularioValido() ? 'valido' : 'invalido'">
+        {{ esFormularioValido() ? 'Válido' : 'Inválido' }}
+      </span>
+    </div>
+  </div>
+
+</div>

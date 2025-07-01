@@ -1,60 +1,158 @@
-<div class="estado-container">
-  <h3>Estado del Trámite</h3>
-  <div class="tramite-info">
-    <div class="info-item">
-      <strong>Establecimiento:</strong> {{ establecimiento?.nombre }}
-    </div>
-    <div class="info-item">
-      <strong>Número de Registro:</strong> 
-      <span [class]="numeroRegistro ? 'con-registro' : 'sin-registro'">
-        {{ numeroRegistro || 'Pendiente de asignación' }}
-      </span>
-    </div>
-    <div class="info-item">
-      <strong>Progreso:</strong> {{ pasoActual + 1 }} de {{ pasosTramite.length }}
+<!-- Header con información del trámite -->
+<div class="header-tramite">
+  <div class="info-basica">
+    <h2>Acreditación Turística</h2>
+    <p class="establecimiento-nombre">{{ datosResumen.nombre }}</p>
+    <div class="estado-badge" [class]="estadoGeneral.toLowerCase()">
+      {{ estadoGeneral }}
     </div>
   </div>
+  
+  <div class="progreso-circular">
+    <div class="circle-progress" [style.--progress]="progresoCompletado + '%'">
+      <span class="porcentaje">{{ progresoCompletado | number:'1.0-0' }}%</span>
+    </div>
+    <p class="progreso-texto">Progreso Completado</p>
+  </div>
+</div>
 
+<!-- Resumen de datos del establecimiento -->
+<div class="resumen-establecimiento">
+  <h3>Resumen de Información Registrada</h3>
+  
+  <div class="datos-grid">
+    <div class="dato-item">
+      <span class="etiqueta">Representante Legal:</span>
+      <span class="valor">{{ datosResumen.representanteLegal }}</span>
+    </div>
+    
+    <div class="dato-item">
+      <span class="etiqueta">RUC:</span>
+      <span class="valor">{{ datosResumen.ruc }}</span>
+    </div>
+    
+    <div class="dato-item">
+      <span class="etiqueta">Actividad Económica:</span>
+      <span class="valor">{{ datosResumen.actividad }}</span>
+    </div>
+    
+    <div class="dato-item">
+      <span class="etiqueta">Ubicación:</span>
+      <span class="valor">{{ datosResumen.ubicacion }}</span>
+    </div>
+    
+    <div class="dato-item">
+      <span class="etiqueta">Teléfono:</span>
+      <span class="valor">{{ datosResumen.telefono }}</span>
+    </div>
+    
+    <div class="dato-item">
+      <span class="etiqueta">Email:</span>
+      <span class="valor">{{ datosResumen.email }}</span>
+    </div>
+  </div>
+</div>
+
+<!-- Timeline del proceso -->
+<div class="proceso-timeline">
+  <h3>Estado del Proceso de Acreditación</h3>
   <div class="timeline">
     @for (paso of pasosTramite; track paso.titulo; let i = $index) {
-      <div class="timeline-item" 
-           [class.completado]="i < pasoActual" 
-           [class.activo]="i === pasoActual"
-           [class.pendiente]="i > pasoActual">
+      <div class="timeline-item" [class]="paso.estado">
         <div class="timeline-marker">
-          @if (i < pasoActual) {
-            <span class="check">✓</span>
+          @if (paso.estado === 'completado') {
+            <i class="icon-check">✓</i>
+          } @else if (paso.estado === 'en_proceso') {
+            <i class="icon-process">⏳</i>
           } @else {
-            <span class="numero">{{ i + 1 }}</span>
+            <span class="step-number">{{ i + 1 }}</span>
           }
         </div>
+        
         <div class="timeline-content">
           <h4>{{ paso.titulo }}</h4>
           <p>{{ paso.descripcion }}</p>
-          @if (paso.fecha !== 'Pendiente') {
-            <small class="fecha">{{ paso.fecha }}</small>
-          } @else {
-            <small class="fecha pendiente-text">{{ paso.fecha }}</small>
-          }
-          @if (paso.observaciones) {
-            <div class="observaciones">
-              <strong>Observaciones:</strong> {{ paso.observaciones }}
-            </div>
-          }
+          
+          <div class="paso-meta">
+            <span class="fecha">{{ paso.fecha }}</span>
+            @if (paso.observaciones) {
+              <span class="observaciones">{{ paso.observaciones }}</span>
+            }
+          </div>
         </div>
       </div>
     }
   </div>
+</div>
 
-  <div class="acciones">
-    @if (pasoActual < pasosTramite.length - 1) {
-      <button class="btn-siguiente" (click)="siguientePaso()">
-        Continuar con el proceso
-      </button>
-    } @else {
-      <div class="proceso-completado">
-        🎉 ¡Proceso de acreditación completado!
+<!-- Documentos procesados -->
+<div class="documentos-procesados">
+  <h3>Documentos Procesados</h3>
+  <div class="documentos-grid">
+    @for (documento of documentosProcesados; track documento.nombre) {
+      <div class="documento-card">
+        <div class="documento-icon"></div>
+        <div class="documento-info">
+          <h4>{{ documento.nombre }}</h4>
+          <p class="estado-doc">{{ documento.estado }}</p>
+          <p class="fecha-doc">{{ documento.fecha }}</p>
+        </div>
+        <div class="estado-check"></div>
       </div>
     }
+  </div>
+</div>
+
+<!-- Próximos pasos -->
+<div class="proximos-pasos">
+  <h3>Próximos Pasos</h3>
+  <div class="pasos-lista">
+    <div class="paso-siguiente">
+      <span class="numero">1</span>
+      <div class="paso-contenido">
+        <h4>Revisión Técnica</h4>
+        <p>El equipo técnico del Ministerio de Turismo revisará toda la información proporcionada</p>
+      </div>
+    </div>
+    
+    <div class="paso-siguiente">
+      <span class="numero">2</span>
+      <div class="paso-contenido">
+        <h4>Notificación por Email</h4>
+        <p>Recibirá una notificación con el resultado de la revisión y el número de registro turístico</p>
+      </div>
+    </div>
+    
+    <div class="paso-siguiente">
+      <span class="numero">3</span>
+      <div class="paso-contenido">
+        <h4>Certificado Oficial</h4>
+        <p>Descarga del certificado oficial de registro turístico</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Acciones finales -->
+<div class="acciones-finales">
+  <div class="info-contacto">
+    <h4>¿Necesita ayuda?</h4>
+    <p>Contacte al Ministerio de Turismo:</p>
+    <p><strong>Teléfono:</strong> 1700-TURISMO (887-4766)</p>
+    <p><strong>Email:</strong> info&#64;turismo.gob.ec</p>
+  </div>
+  
+  <div class="botones-accion">
+    <button class="btn-descargar" (click)="descargarResumen()">
+      Descargar Resumen
+    </button>
+    
+    <button class="btn-finalizar" (click)="finalizarProceso()">
+      Finalizar Proceso
+    </button>
+    
+    <button class="btn-inicio" (click)="irAInicio()">
+       Ir a Inicio
+    </button>
   </div>
 </div>

@@ -1,0 +1,109 @@
+<div class="contacto-establecimiento-container">
+  
+  <!-- Título -->
+  <div class="titulo-seccion">
+    <h3>Persona de Contacto en el Establecimiento:</h3>
+  </div>
+
+  <!-- Formulario -->
+  <form [formGroup]="formularioContacto" class="formulario-contacto">
+    
+    <!-- Primera fila: Cédula de Identidad y Datos del Registro Civil -->
+    <div class="fila-contacto">
+      
+      <!-- Cédula de Identidad -->
+      <div class="campo-grupo">
+        <label class="campo-label">
+          Cédula de Identidad: <span class="required">(*)</span>
+        </label>
+        <div class="input-con-boton">
+          <input 
+            type="text" 
+            formControlName="cedulaIdentidad"
+            class="input-contacto input-con-btn"
+            [class.error]="mostrarErrorCedula"
+            placeholder="Ingrese número de cédula"
+            maxlength="10">
+          <button 
+            type="button" 
+            class="btn-buscar-integrado"
+            [disabled]="!cedulaValida"
+            (click)="buscarDatosRegistroCivil()">
+          </button>
+        </div>
+        @if (mostrarErrorCedula) {
+          <div class="error-text">cedulaIdentidad es requerido</div>
+        }
+      </div>
+
+      <!-- Datos del Registro Civil -->
+      <div class="campo-grupo">
+        <label class="campo-label">
+          Datos del registro civil: <span class="required">(*)</span>
+        </label>
+        <input 
+          type="text" 
+          formControlName="datosRegistroCivil"
+          class="input-contacto input-readonly"
+          [class.error]="mostrarErrorRegistroCivil"
+          placeholder="Datos obtenidos del registro civil"
+          readonly>
+        @if (mostrarErrorRegistroCivil) {
+          <div class="error-text">datosRegistroCivil es requerido</div>
+        }
+      </div>
+
+    </div>
+
+    <!-- Segunda fila: Teléfonos y Correo -->
+    <div class="fila-contacto-triple">
+      
+      <!-- Número de Teléfono Principal -->
+      <div class="campo-grupo">
+        <label class="campo-label">
+          Número de Teléfono Principal: <span class="required">(*)</span>
+        </label>
+        <input 
+          type="text" 
+          formControlName="numeroTelefonoPrincipal"
+          class="input-contacto"
+          [class.error]="mostrarErrorTelefonoPrincipal"
+          placeholder="Ej: 0961789810"
+          maxlength="10">
+        @if (mostrarErrorTelefonoPrincipal) {
+          <div class="error-text">numeroTelefonoPrincipal es requerido</div>
+        }
+      </div>
+
+      <!-- Número de Teléfono Secundario -->
+      <div class="campo-grupo">
+        <label class="campo-label">
+          Número de Teléfono Secundario:
+        </label>
+        <input 
+          type="text" 
+          formControlName="numeroTelefonoSecundario"
+          class="input-contacto"
+          placeholder="Ej: 0961789810"
+          maxlength="10">
+      </div>
+
+      <!-- Correo Electrónico -->
+      <div class="campo-grupo">
+        <label class="campo-label">
+          Correo Electrónico: <span class="required">(*)</span>
+        </label>
+        <input 
+          type="email" 
+          formControlName="correoElectronico"
+          class="input-contacto"
+          [class.error]="mostrarErrorCorreo"
+          placeholder="ejemplo@dominio.com">
+        @if (mostrarErrorCorreo) {
+          <div class="error-text">correoElectronico es requerido</div>
+        }
+      </div>
+
+    </div>
+
+  </form>

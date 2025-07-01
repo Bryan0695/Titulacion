@@ -1,37 +1,40 @@
-<div class="documentos-container">
-  <h3>Documentos Requeridos para {{ tipoTramite }}</h3>
-  <div class="documentos-info">
-    <p>Establecimiento: <strong>{{ establecimiento?.id }} - {{ establecimiento?.nombre }}</strong></p>
-  </div>
-  
-  <ul class="documentos-lista">
-    @for (documento of documentosRequeridos; track documento.nombre) {
-      <li class="documento-item">
-        <div class="documento-info">
-          <i class="icono-documento">📄</i>
-          <span class="documento-nombre">{{ documento.nombre }}</span>
-        </div>
-        <div class="documento-acciones">
-          <span class="estado" [class]="documento.estado">{{ documento.estado }}</span>
-          @if (documento.estado === 'pendiente') {
-            <input type="file" #fileInput (change)="subirArchivo($event, documento)" accept=".pdf,.jpg,.jpeg,.png" style="display: none;">
-            <button class="btn-subir" (click)="fileInput.click()">Subir</button>
-          }
-          @if (documento.estado === 'subido') {
-            <button class="btn-ver" (click)="verArchivo(documento)">Ver</button>
-            <button class="btn-eliminar" (click)="eliminarArchivo(documento)">Eliminar</button>
-          }
-        </div>
-      </li>
-    }
-  </ul>
-  
-  <div class="upload-section">
-    <div class="resumen">
-      <p><strong>Progreso:</strong> {{ documentosSubidos }} de {{ documentosRequeridos.length }} documentos subidos</p>
-      @if (todosDocumentosSubidos) {
-        <p class="mensaje-exito">✅ Todos los documentos han sido subidos correctamente</p>
-      }
-    </div>
-  </div>
+<!-- Sección: MUY IMPORTANTE (azul) -->
+<div class="seccion-importante">
+  <h4>MUY IMPORTANTE:</h4>
+  <p>La información presentada a continuación será integrada...</p>
+</div>
+
+
+<!-- Componente 1: Datos del establecimiento -->
+<div class="seccion-componente">
+  <app-datos-establecimiento 
+    [establecimiento]="establecimiento"
+    (datosCompletos)="onComponenteCompleto(1, $event)">
+  </app-datos-establecimiento>
+</div>
+
+<!-- Componente 2: Personal del establecimiento -->
+<div class="seccion-componente">
+  <app-personal-establecimiento 
+    [establecimiento]="establecimiento"
+    (personalCompleto)="onComponenteCompleto(2, $event)">
+  </app-personal-establecimiento>
+</div>
+
+<!-- Componente 3: Datos de ubicación -->
+<div class="seccion-componente">
+  <app-ubicacion-establecimiento 
+    [establecimiento]="establecimiento"
+    (ubicacionCompleta)="onComponenteCompleto(3, $event)"
+    (ubicacionData)="onUbicacionData($event)">
+  </app-ubicacion-establecimiento>
+</div>
+
+<!-- Componente 4: Contacto del establecimiento -->
+<div class="seccion-componente">
+  <app-contacto-establecimiento 
+    [establecimiento]="establecimiento"
+    (contactoCompleto)="onComponenteCompleto(4, $event)"
+    (contactoData)="onContactoData($event)">
+  </app-contacto-establecimiento>
 </div>

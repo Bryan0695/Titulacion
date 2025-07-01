@@ -1,0 +1,214 @@
+<div class="ubicacion-establecimiento-container">
+  
+  <!-- Título -->
+  <div class="titulo-seccion">
+    <h3>Datos de Ubicación del Establecimiento:</h3>
+  </div>
+
+  <!-- Formulario -->
+  <form [formGroup]="formularioUbicacion" class="formulario-ubicacion">
+    
+    <!-- Primera fila: Provincia, Cantón, Parroquia -->
+    <div class="fila-ubicacion">
+      
+      <!-- Provincia -->
+      <div class="campo-grupo">
+        <label class="campo-label">
+          Provincia: <span class="required">(*)</span>
+        </label>
+        <select 
+          formControlName="provincia"
+          class="select-ubicacion"
+          [class.error]="formularioUbicacion.get('provincia')?.invalid && formularioUbicacion.get('provincia')?.touched"
+          (change)="onProvinciaChange()">
+          <option value="">Seleccione una provincia</option>
+          @for (provincia of provincias; track provincia.codigo) {
+            <option [value]="provincia.codigo">
+              {{ provincia.nombre }}
+            </option>
+          }
+        </select>
+        @if (formularioUbicacion.get('provincia')?.invalid && formularioUbicacion.get('provincia')?.touched) {
+          <div class="error-text">provincia es requerido</div>
+        }
+      </div>
+
+      <!-- Cantón -->
+      <div class="campo-grupo">
+        <label class="campo-label">
+          Cantón: <span class="required">(*)</span>
+        </label>
+        <select 
+          formControlName="canton"
+          class="select-ubicacion"
+          [class.error]="formularioUbicacion.get('canton')?.invalid && formularioUbicacion.get('canton')?.touched"
+          [disabled]="cantonesFiltrados.length === 0"
+          (change)="onCantonChange()">
+          <option value="">Seleccione un cantón</option>
+          @for (canton of cantonesFiltrados; track canton.codigo) {
+            <option [value]="canton.codigo">
+              {{ canton.nombre }}
+            </option>
+          }
+        </select>
+        @if (formularioUbicacion.get('canton')?.invalid && formularioUbicacion.get('canton')?.touched) {
+          <div class="error-text">cantón es requerido</div>
+        }
+      </div>
+
+      <!-- Parroquia -->
+      <div class="campo-grupo">
+        <label class="campo-label">
+          Parroquia: <span class="required">(*)</span>
+        </label>
+        <select 
+          formControlName="parroquia"
+          class="select-ubicacion"
+          [class.error]="formularioUbicacion.get('parroquia')?.invalid && formularioUbicacion.get('parroquia')?.touched"
+          [disabled]="parroquiasFiltradas.length === 0"
+          (change)="onParroquiaChange()">
+          <option value="">Seleccione una parroquia</option>
+          @for (parroquia of parroquiasFiltradas; track parroquia.codigo) {
+            <option [value]="parroquia.codigo">
+              {{ parroquia.nombre }}
+            </option>
+          }
+        </select>
+        @if (formularioUbicacion.get('parroquia')?.invalid && formularioUbicacion.get('parroquia')?.touched) {
+          <div class="error-text">parroquia es requerido</div>
+        }
+      </div>
+
+    </div>
+
+    <!-- Segunda fila: Calle Principal, Numeración, Calle Intersección -->
+    <div class="fila-ubicacion">
+      
+      <!-- Calle Principal -->
+      <div class="campo-grupo">
+        <label class="campo-label">
+          Calle Principal: <span class="required">(*)</span>
+        </label>
+        <input 
+          type="text" 
+          formControlName="callePrincipal"
+          class="input-ubicacion"
+          [class.error]="formularioUbicacion.get('callePrincipal')?.invalid && formularioUbicacion.get('callePrincipal')?.touched"
+          placeholder="Nombre de la calle principal">
+        @if (formularioUbicacion.get('callePrincipal')?.invalid && formularioUbicacion.get('callePrincipal')?.touched) {
+          <div class="error-text">callePrincipal es requerido</div>
+        }
+      </div>
+
+      <!-- Numeración -->
+      <div class="campo-grupo">
+        <label class="campo-label">
+          Numeración: <span class="required">(*)</span>
+        </label>
+        <input 
+          type="text" 
+          formControlName="numeracion"
+          class="input-ubicacion"
+          [class.error]="formularioUbicacion.get('numeracion')?.invalid && formularioUbicacion.get('numeracion')?.touched"
+          placeholder="Número o S/N">
+        @if (formularioUbicacion.get('numeracion')?.invalid && formularioUbicacion.get('numeracion')?.touched) {
+          <div class="error-text">numeración es requerido</div>
+        }
+      </div>
+
+      <!-- Calle Intersección -->
+      <div class="campo-grupo">
+        <label class="campo-label">
+          Calle Intersección: <span class="required">(*)</span>
+        </label>
+        <input 
+          type="text" 
+          formControlName="calleInterseccion"
+          class="input-ubicacion"
+          [class.error]="formularioUbicacion.get('calleInterseccion')?.invalid && formularioUbicacion.get('calleInterseccion')?.touched"
+          placeholder="Calle de intersección">
+        @if (formularioUbicacion.get('calleInterseccion')?.invalid && formularioUbicacion.get('calleInterseccion')?.touched) {
+          <div class="error-text">calleIntersección es requerido</div>
+        }
+      </div>
+
+    </div>
+
+    <!-- Tercera fila: Referencia de Ubicación -->
+    <div class="fila-ubicacion fila-completa">
+      
+      <!-- Referencia de Ubicación -->
+      <div class="campo-grupo campo-completo">
+        <label class="campo-label">
+          Referencia de Ubicación: <span class="required">(*)</span>
+        </label>
+        <textarea 
+          formControlName="referenciaUbicacion"
+          class="textarea-ubicacion"
+          [class.error]="formularioUbicacion.get('referenciaUbicacion')?.invalid && formularioUbicacion.get('referenciaUbicacion')?.touched"
+          rows="3"
+          placeholder="Ingrese referencias adicionales para ubicar el establecimiento"></textarea>
+        @if (formularioUbicacion.get('referenciaUbicacion')?.invalid && formularioUbicacion.get('referenciaUbicacion')?.touched) {
+          <div class="error-text">referenciaUbicación es requerido</div>
+        }
+      </div>
+
+    </div>
+
+    <!-- Cuarta fila: Latitud y Longitud -->
+    <div class="fila-ubicacion">
+      
+      <!-- Latitud -->
+      <div class="campo-grupo">
+        <label class="campo-label">
+          Latitud: <span class="required">(*)</span>
+        </label>
+        <input 
+          type="number" 
+          formControlName="latitud"
+          class="input-ubicacion"
+          step="0.000000000000001"
+          placeholder="Ej: -1.2345678"
+          [class.error]="formularioUbicacion.get('latitud')?.invalid && formularioUbicacion.get('latitud')?.touched">
+        @if (formularioUbicacion.get('latitud')?.invalid && formularioUbicacion.get('latitud')?.touched) {
+          <div class="error-text">latitud es requerido</div>
+        }
+      </div>
+
+      <!-- Longitud -->
+      <div class="campo-grupo">
+        <label class="campo-label">
+          Longitud: <span class="required">(*)</span>
+        </label>
+        <input 
+          type="number" 
+          formControlName="longitud"
+          class="input-ubicacion"
+          step="0.000000000000001"
+          placeholder="Ej: -78.1234567"
+          [class.error]="formularioUbicacion.get('longitud')?.invalid && formularioUbicacion.get('longitud')?.touched">
+        @if (formularioUbicacion.get('longitud')?.invalid && formularioUbicacion.get('longitud')?.touched) {
+          <div class="error-text">longitud es requerido</div>
+        }
+      </div>
+
+      <!-- Espacio vacío para mantener el grid -->
+      <div class="campo-grupo">
+        <!-- Espacio intencionalmente vacío -->
+      </div>
+
+    </div>
+
+  </form>
+
+  <!-- Mapa (simulado - aquí iría tu componente de mapa real) -->
+  <div class="mapa-container">
+    <div class="mapa-placeholder">
+      <p>Aquí se mostraría el mapa interactivo</p>
+      @if (latitudValue && longitudValue) {
+        <p><strong>Coordenadas actuales:</strong> {{ latitudValue }}, {{ longitudValue }}</p>
+      }
+    </div>
+  </div>
+
+</div>

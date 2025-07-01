@@ -1,0 +1,179 @@
+.personal-establecimiento-container {
+  padding: 20px;
+}
+
+.titulo-seccion {
+  margin-bottom: 20px;
+
+  h3 {
+    font-size: 16px;
+    color: #333;
+    margin: 0;
+    font-weight: 600;
+
+    .required {
+      color: #dc3545;
+    }
+
+    .contador {
+      background: #007bff;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 14px;
+      margin-left: 8px;
+    }
+  }
+}
+
+.formulario-personal {
+  .fila-campos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+  }
+
+  .campo-grupo {
+    .campo-label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .input-con-spinner {
+      position: relative;
+      display: flex;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      overflow: hidden;
+
+      .input-numero {
+        flex: 1;
+        padding: 8px 12px;
+        border: none;
+        font-size: 14px;
+        text-align: center;
+        background: white;
+
+        &:focus {
+          outline: none;
+          box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+        }
+
+        // Ocultar spinners nativos del navegador
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+
+        &[type=number] {
+          -moz-appearance: textfield;
+        }
+      }
+
+      .spinner-botones {
+        display: flex;
+        flex-direction: column;
+        border-left: 1px solid #ccc;
+
+        .btn-spinner {
+          background: #f8f9fa;
+          border: none;
+          padding: 0;
+          width: 20px;
+          height: 16px;
+          cursor: pointer;
+          font-size: 10px;
+          color: #6c757d;
+          transition: all 0.2s ease;
+
+          &:hover {
+            background: #007bff;
+            color: white;
+          }
+
+          &:active {
+            background: #0056b3;
+          }
+
+          &.btn-arriba {
+            border-bottom: 1px solid #ccc;
+          }
+        }
+      }
+    }
+  }
+}
+
+.resumen-personal {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  padding: 15px;
+  margin-top: 20px;
+
+  .resumen-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    font-size: 14px;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid #e9ecef;
+      margin-bottom: 5px;
+      padding-bottom: 8px;
+    }
+
+    .valido {
+      color: #28a745;
+      font-weight: bold;
+    }
+
+    .invalido {
+      color: #dc3545;
+      font-weight: bold;
+    }
+  }
+}
+
+// Estados de validación
+.input-con-spinner {
+  &.error {
+    border-color: #dc3545;
+    
+    .input-numero:focus {
+      box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.25);
+    }
+  }
+
+  &.success {
+    border-color: #28a745;
+    
+    .input-numero:focus {
+      box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.25);
+    }
+  }
+}
+
+// Animaciones
+.input-numero {
+  transition: all 0.3s ease;
+}
+
+.btn-spinner {
+  transition: all 0.2s ease;
+  
+  &:hover {
+    transform: scale(1.1);
+  }
+}

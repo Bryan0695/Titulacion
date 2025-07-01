@@ -1,4 +1,11 @@
-// ARCHIVO: src/app/components/proceso-acreditacion/formulario-registro/formulario-registro.component.scss
+// ARCHIVO: src/app/components/establecimientos/datos-establecimiento/datos-establecimiento.component.scss
+
+.datos-establecimiento-container {
+  padding: 0;
+  max-width: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
 
 .atencion-section {
   background: #d1ecf1;
@@ -32,7 +39,8 @@
   }
 }
 
-.datos-sri-section, .datos-supercias-section {
+.datos-sri-section, 
+.datos-supercias-section {
   background: #e2e3f3;
   border: 1px solid #c8caf0;
   border-radius: 6px;
@@ -55,6 +63,14 @@
   .full-width {
     grid-column: span 2;
   }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    
+    .full-width {
+      grid-column: span 1;
+    }
+  }
 }
 
 .form-group {
@@ -66,6 +82,10 @@
     margin-bottom: 5px;
     color: #555;
     font-size: 14px;
+
+    .required {
+      color: #dc3545;
+    }
   }
 
   .form-value {
@@ -90,134 +110,35 @@
   .form-control {
     width: 100%;
     padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 0;
+    font-size: 13px;
     background-color: white;
+    font-family: Arial, sans-serif;
+    height: 35px;
+    box-sizing: border-box;
 
     &:focus {
       outline: none;
-      border-color: #007bff;
-      box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+      border-color: #1976d2;
+      box-shadow: none;
+    }
+
+    &.error {
+      border-color: #dc3545;
+      box-shadow: none;
     }
   }
 
-  .required {
+  .error-text {
     color: #dc3545;
-  }
-}
-
-.documentos-inspeccion {
-  background: #fff3cd;
-  border: 1px solid #ffeaa7;
-  border-radius: 6px;
-  padding: 15px;
-  margin-bottom: 20px;
-
-  .documento-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    margin-bottom: 15px;
-    padding: 10px;
-    background: white;
-    border-radius: 4px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-
-  .documento-checkbox {
-    flex-shrink: 0;
+    font-size: 11px;
     margin-top: 2px;
-  }
-
-  .documento-icon {
-    font-size: 16px;
-    flex-shrink: 0;
-  }
-
-  .documento-text {
-    flex: 1;
-    font-size: 13px;
-    line-height: 1.4;
-    color: #333;
-  }
-
-  .btn-subir {
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 5px 10px;
-    cursor: pointer;
-    font-size: 14px;
-    flex-shrink: 0;
-    transition: background-color 0.3s ease;
-
-    &:hover {
-      background: #0056b3;
-    }
-
-    &:active {
-      transform: translateY(1px);
-    }
+    display: block;
+    font-style: normal;
   }
 }
 
-// Toggle Switch styles
-.documento-toggle {
-  flex-shrink: 0;
-  margin-top: 2px;
-  display: flex;
-  align-items: center;
-}
-
-// Override PrimeNG toggle switch styles if needed
-::ng-deep {
-  .p-toggleswitch {
-    width: 3rem;
-    height: 1.75rem;
-    
-    .p-toggleswitch-slider {
-      background-color: #dee2e6;
-      border-radius: 30px;
-      transition: all 0.3s ease;
-      
-      &:before {
-        background-color: white;
-        width: 1.25rem;
-        height: 1.25rem;
-        left: 0.25rem;
-        bottom: 0.25rem;
-        border-radius: 50%;
-        transition: all 0.3s ease;
-      }
-    }
-    
-    &.p-toggleswitch-checked {
-      .p-toggleswitch-slider {
-        background-color: #007bff;
-        
-        &:before {
-          transform: translateX(1.25rem);
-        }
-      }
-    }
-    
-    &:not(.p-disabled):hover .p-toggleswitch-slider {
-      background-color: #c6c9cc;
-    }
-    
-    &.p-toggleswitch-checked:not(.p-disabled):hover .p-toggleswitch-slider {
-      background-color: #0056b3;
-    }
-  }
-}
-
-// Botón Guardar y Continuar - SIN ICONO
 .form-actions {
   background: #f8f9fa;
   padding: 20px;
@@ -260,22 +181,58 @@
 
 // Responsive design
 @media (max-width: 768px) {
-  .form-grid {
-    grid-template-columns: 1fr;
+  .datos-establecimiento-container {
+    padding: 10px;
+  }
 
-    .full-width {
-      grid-column: span 1;
+  .form-section {
+    padding: 15px;
+  }
+
+  .atencion-section,
+  .datos-sri-section,
+  .datos-supercias-section {
+    padding: 15px;
+  }
+
+  .btn-guardar-continuar {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .atencion-section {
+    h4 {
+      font-size: 14px;
+    }
+
+    p {
+      font-size: 13px;
     }
   }
 
-  .documento-item {
-    flex-direction: column;
-    align-items: stretch !important;
-    text-align: center;
-
-    .btn-subir {
-      align-self: center;
-      margin-top: 10px;
+  .datos-sri-section,
+  .datos-supercias-section {
+    h4 {
+      font-size: 14px;
     }
+  }
+
+  .form-group {
+    label {
+      font-size: 12px;
+    }
+
+    .form-value {
+      font-size: 13px;
+    }
+  }
+
+  .form-control {
+    font-size: 12px;
+    height: 32px;
+    padding: 6px 8px;
   }
 }
