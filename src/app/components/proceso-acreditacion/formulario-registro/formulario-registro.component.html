@@ -75,10 +75,9 @@
   <div class="documentos-inspeccion">
     <div class="documento-item">
       <div class="documento-toggle">
-        <p-toggleswitch 
-          formControlName="documento1Presentado">
+        <p-toggleswitch id="documento2Presentado" formControlName="documento1Presentado">
           <ng-template #handle let-checked="checked">
-            <i [ngClass]="['!text-xs', 'pi', checked ? 'pi-check' : 'pi-times']"></i>
+            <span class="!text-xs font-semibold">{{ checked ? 'SÍ' : 'NO' }}</span>
           </ng-template>
         </p-toggleswitch>
       </div>
@@ -88,10 +87,9 @@
 
     <div class="documento-item">
       <div class="documento-toggle">
-        <p-toggleswitch 
-          formControlName="documento2Presentado">
+        <p-toggleswitch id="documento2Presentado" formControlName="documento2Presentado">
           <ng-template #handle let-checked="checked">
-            <i [ngClass]="['!text-xs', 'pi', checked ? 'pi-check' : 'pi-times']"></i>
+            <span class="!text-xs font-semibold">{{ checked ? 'SÍ' : 'NO' }}</span>
           </ng-template>
         </p-toggleswitch>
       </div>
